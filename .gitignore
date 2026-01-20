@@ -1,0 +1,44 @@
+# Environment
+agno-env/
+venv/
+.venv/
+.env
+*.pyc
+__pycache__/
+*.egg-info/
+
+# Storage and data - ALL storage excluded
+storage/
+
+# Elasticsearch data
+elasticsearch/backups/
+
+# Qdrant data  
+qdrant/qdrant_data/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Build files
+*.o
+*.so
+.build/
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Cache
+.cache/
+*.cache
+
+# Git submodules
+*/.git/

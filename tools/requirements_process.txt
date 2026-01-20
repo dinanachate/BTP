@@ -1,0 +1,6 @@
+pdfminer.six>=20221105
+pillow>=9.0.0
+pytesseract>=0.3.10 ; extra == "ocr"
+python-magic>=0.4.27
+beautifulsoup4>=4.12.2
+requests>=2.31.0
