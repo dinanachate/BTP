@@ -8,19 +8,25 @@ from datetime import datetime
 from rag_engine.rag import stream_rag_with_thinking
 from config_loader import settings
 
+# --- FORCE le modèle Ollama exact pour éviter le 404 ---
+DEFAULT_RAG_MODEL = "mistral:latest"
 
-async def stream_rag_response(question: str, top_k: int = 5, model: str = "rag-hybrid"):
+
+async def stream_rag_response(question: str, top_k: int = 5, model: str = None):
     """
     Stream RAG response with thinking from Ollama, then corrected final response
 
     Args:
         question: User question
         top_k: Number of top results to retrieve
-        model: Model identifier
+        model: Model identifier (overridden by DEFAULT_RAG_MODEL)
 
     Yields:
         str: Server-sent events formatted response chunks
     """
+    if model is None:
+        model = DEFAULT_RAG_MODEL  # force mistral:latest
+
     try:
         message_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
         created_timestamp = int(datetime.now().timestamp())
@@ -28,7 +34,7 @@ async def stream_rag_response(question: str, top_k: int = 5, model: str = "rag-h
         loop = asyncio.get_event_loop()
 
         # Use the async wrapper to stream in real-time
-        async for update in async_rag_stream_wrapper(loop, stream_rag_with_thinking, question, top_k):
+        async for update in async_rag_stream_wrapper(loop, stream_rag_with_thinking, question, top_k, model):
             if update['type'] == 'thinking':
                 # Stream Ollama response as reasoning_content (thinking box)
                 thinking_chunk = {

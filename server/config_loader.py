@@ -5,7 +5,7 @@ Loads settings from config.ini and environment variables.
 import os
 import configparser
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -35,7 +35,8 @@ class Config:
     CORS_ALLOW_HEADERS = config.get('cors', 'allow_headers', fallback='*').split(',')
 
     # RAG Configuration
-    RAG_MODEL = config.get('rag', 'model', fallback='gpt-oss:20b')
+    # Force Ollama model to mistral:latest
+    RAG_MODEL = "mistral:latest"
     RAG_DEFAULT_TOP_K = config.getint('rag', 'default_top_k', fallback=30)
     RAG_CHUNK_SIZE = config.getint('rag', 'chunk_size', fallback=5)
     RAG_CHUNK_DELAY = config.getfloat('rag', 'chunk_delay', fallback=0.01)

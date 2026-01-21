@@ -103,7 +103,7 @@ services:
     environment:
 
       # comment to disable cloud or fill to enable cloud
-      - OLLAMA_API_KEY=
+      # - OLLAMA_API_KEY=YOUR_KEY_HERE
       # Python settings
       - PYTHONUNBUFFERED=1
 
